@@ -1,15 +1,16 @@
 ﻿  main.cpp
-C:\Users\stepaks\source\repos\randomizer\main.cpp(24,32): warning C4305: аргумент: усечение из "double" в "T"
+C:\Users\stepaks\source\repos\randomizer\main.cpp(35,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\stepaks\source\repos\randomizer\main.cpp(41,32): warning C4305: аргумент: усечение из "double" в "T"
           with
           [
               T=float
           ]
-C:\Users\stepaks\source\repos\randomizer\main.cpp(24,26): warning C4305: аргумент: усечение из "double" в "T"
+C:\Users\stepaks\source\repos\randomizer\main.cpp(41,26): warning C4305: аргумент: усечение из "double" в "T"
           with
           [
               T=float
           ]
-C:\Users\stepaks\source\repos\randomizer\main.cpp(65,53): warning C4244: =: преобразование "sf::Int64" в "float", возможна потеря данных
-C:\Users\stepaks\source\repos\randomizer\main.cpp(79,59): warning C4244: =: преобразование "double" в "float", возможна потеря данных
-C:\Users\stepaks\source\repos\randomizer\main.cpp(87,40): warning C4244: -=: преобразование "double" в "float", возможна потеря данных
+C:\Users\stepaks\source\repos\randomizer\main.cpp(107,53): warning C4244: =: преобразование "sf::Int64" в "float", возможна потеря данных
+C:\Users\stepaks\source\repos\randomizer\main.cpp(118,59): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+C:\Users\stepaks\source\repos\randomizer\main.cpp(126,40): warning C4244: -=: преобразование "double" в "float", возможна потеря данных
   randomizer.vcxproj -> C:\Users\stepaks\source\repos\randomizer\x64\Debug\randomizer.exe
