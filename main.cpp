@@ -28,11 +28,26 @@ int main()
 {
     RenderWindow window(sf::VideoMode(1280, 360), "EPIC RANDOMIZER");
     window.setFramerateLimit(240);
+    window.setMouseCursorVisible(false);
 
-    while (!Keyboard::isKeyPressed(Keyboard::Space)) {
 
-    }
     srand(time(NULL));
+
+    Vector2i m;
+
+    int discoint=1;
+    Texture disco1;
+    disco1.loadFromFile("C:/Users/stepaks/source/repos/randomizer/disco1.png");
+    Texture disco2;
+    disco2.loadFromFile("C:/Users/stepaks/source/repos/randomizer/disco2.png");
+    Texture disco3;
+    disco3.loadFromFile("C:/Users/stepaks/source/repos/randomizer/disco3.png");
+    Texture disco4;
+    disco4.loadFromFile("C:/Users/stepaks/source/repos/randomizer/disco4.png");
+    const Texture discoarr[] = { disco1,disco2,disco3,disco4 };
+    Sprite discoball;
+    discoball.setTexture(discoarr[0]);
+    discoball.scale(Vector2f(0.75, 0.75));
 
     Texture pointer; // указатель на выйгрышное число
     pointer.loadFromFile("C:/Users/stepaks/source/repos/randomizer/pointer.png");
@@ -59,6 +74,8 @@ int main()
     Vector2f pos2;
 
     sf::Music top; //музяка
+    sf::Music winsound; //звук победы
+    winsound.openFromFile("C:/Users/stepaks/source/repos/randomizer/victory.mp3");
     top.openFromFile("C:/Users/stepaks/source/repos/randomizer/track.mp3");
     top.play();
 
@@ -67,12 +84,14 @@ int main()
     RectangleShape bg(Vector2f(1280, 360));// фон
     bg.setFillColor(Color::White);
 
+    Clock discob; // смена техтуры шара
     Clock tostart;//отсчёт до начала рулетки
     bool flag = true; // начало рулетки
     bool slowflag = false;
     Clock clock;//таймер
     float spintimer; // время для ускорения и замедления рулетки
     float time; //прост
+    float discotime;
 
     Number* first = new Number();
     first->ob.setPosition(27, 99);
@@ -108,10 +127,15 @@ int main()
         clock.restart();
         time = time / 3000;
         if (flag) {
+            m = Mouse::getPosition(window);
+            discoball.setPosition(m.x-45,m.y-45);
            
-
-           
-
+            discotime = discob.getElapsedTime().asSeconds();
+            if (discotime > 0.3) {
+                discoball.setTexture(discoarr[discoint]);
+                discoint = discoint == 3 ? 0 : discoint += 1;
+                discob.restart();
+            }
             spintimer = tostart.getElapsedTime().asSeconds();
 
             if (spintimer < 20 && !slowflag) {
@@ -128,12 +152,15 @@ int main()
                 }
                 else {
                     vel = 0;
+                    winsound.play();
+                    top.stop();
+                    window.setMouseCursorVisible(true);
+                    flag = false;
                 }
             }
-
+            //код отвечающий за движение всего
             fonsprite.move(-1*time*vel, 0);
             fonsprite2.move(-1 * time*vel, 0);
-
             pos = fonsprite.getPosition();
             pos2 = fonsprite2.getPosition();
 
@@ -159,7 +186,10 @@ int main()
 
             if (pos.x <= -1280) {
                 fonsprite.setPosition(pos2.x+1280, 0);
-
+                delete first;
+                delete second;
+                delete third;
+                delete fourth;
                 first = new Number();
 
                 second = new Number();
@@ -179,6 +209,10 @@ int main()
             }
             if (pos2.x <= -1280) {
                 fonsprite2.setPosition(pos.x+1280, 0);
+                delete first1;
+                delete second1;
+                delete third1;
+                delete fourth1;
                 first1 = new Number();
 
                 second1 = new Number();
@@ -196,8 +230,7 @@ int main()
                 third1->mytext.setPosition(pos2.x + 667 + 69, 115);
                 fourth1->mytext.setPosition(pos2.x + 985 + 69, 115);
             }
-        }
-
+        } // основной цикл прокрутки рулетки
         window.setSize(Vector2u(1280,  360));//сохранение размера окна постоянным
         Event event;
         while (window.pollEvent(event))
@@ -206,6 +239,7 @@ int main()
                 window.close();
         }
         window.clear();
+        
         window.draw(bg);
         window.draw(fonsprite);
         window.draw(fonsprite2);
@@ -226,6 +260,9 @@ int main()
         window.draw(third1->mytext);
         window.draw(fourth1->mytext);
         window.draw(point);
+        if (flag) {
+            window.draw(discoball);
+       }
         window.display();
         
     }
