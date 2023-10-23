@@ -4,7 +4,10 @@
 #include <vector>
 #include <algorithm>
 #include <cstdlib>
+#include "StartUI.h"
 using namespace sf;
+int maxi = 100;
+int mini = 1;
 Font font;
 const Color  COLORS[] = { Color::Blue, Color::White, Color::Red, Color::Magenta, Color::Green, Color::Yellow, Color::Cyan };
 class Number {
@@ -12,12 +15,12 @@ public:
     Text mytext;
     std::string number;
     RectangleShape ob{ Vector2f(266,163) }; //прямоугольник в котором будет число number цвета color
-    Number(int min=1, int max=100) {
-        number = (std::to_string((rand() % max - min + 1) + min));
+    Number(int min=mini, int max=maxi) {
+        number = (std::to_string((rand() % (max - min + 1)) + min));
         ob.setFillColor(COLORS[rand() % 7]);
         mytext.setFont(font);
         mytext.setString(number);
-        mytext.setCharacterSize(100);
+        mytext.setCharacterSize(80);
         mytext.setFillColor(Color::Black);
 
     }
@@ -26,9 +29,11 @@ public:
 int main()
 
 {
+    StartUI(mini,maxi);
     RenderWindow window(sf::VideoMode(1280, 360), "EPIC RANDOMIZER");
     window.setFramerateLimit(240);
     window.setMouseCursorVisible(false);
+
 
 
     srand(time(NULL));
@@ -37,27 +42,27 @@ int main()
 
     int discoint=1;
     Texture disco1;
-    disco1.loadFromFile("C:/Users/stepaks/source/repos/randomizer/disco1.png");
+    disco1.loadFromFile("disco1.png");
     Texture disco2;
-    disco2.loadFromFile("C:/Users/stepaks/source/repos/randomizer/disco2.png");
+    disco2.loadFromFile("disco2.png");
     Texture disco3;
-    disco3.loadFromFile("C:/Users/stepaks/source/repos/randomizer/disco3.png");
+    disco3.loadFromFile("disco3.png");
     Texture disco4;
-    disco4.loadFromFile("C:/Users/stepaks/source/repos/randomizer/disco4.png");
+    disco4.loadFromFile("disco4.png");
     const Texture discoarr[] = { disco1,disco2,disco3,disco4 };
     Sprite discoball;
     discoball.setTexture(discoarr[0]);
     discoball.scale(Vector2f(0.75, 0.75));
 
     Texture pointer; // указатель на выйгрышное число
-    pointer.loadFromFile("C:/Users/stepaks/source/repos/randomizer/pointer.png");
+    pointer.loadFromFile("pointer.png");
     Sprite point;
     point.setTexture(pointer);
     point.scale(Vector2f(0.15, 0.15));
     point.setPosition(547, 0);
 
     Texture fon; // сама рамка
-    fon.loadFromFile("C:/Users/stepaks/source/repos/randomizer/frame.png");
+    fon.loadFromFile("frame.png");
     Sprite fonsprite;
     fonsprite.setTexture(fon);
 
@@ -68,15 +73,13 @@ int main()
     font.loadFromFile("C:/Users/stepaks/source/repos/randomizer/fonty.ttf");
   
     float vel = 1;
-    int min = 0;
-    int max = 100;
     Vector2f pos;
     Vector2f pos2;
 
     sf::Music top; //музяка
     sf::Music winsound; //звук победы
-    winsound.openFromFile("C:/Users/stepaks/source/repos/randomizer/victory.mp3");
-    top.openFromFile("C:/Users/stepaks/source/repos/randomizer/track.mp3");
+    winsound.openFromFile("victory.mp3");
+    top.openFromFile("track.mp3");
     top.play();
 
 
